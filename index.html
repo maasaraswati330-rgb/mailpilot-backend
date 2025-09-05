@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MailPilot — Automate Your Emails with Ease</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Use the Inter font family if loaded, otherwise fallback to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-600">MailPilot </a>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors duration-300">Home</a>
+                <a href="#features" class="text-gray-600 hover:text-blue-600 transition-colors duration-300">Features</a>
+                <a href="#pricing" class="text-gray-600 hover:text-blue-600 transition-colors duration-300">Pricing</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-blue-600 transition-colors duration-300">About</a>
+            </div>
+
+            <a href="#" class="hidden md:inline-block bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                Login
+            </a>
+            
+            <button id="mobile-menu-button" class="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <a href="#" class="block py-3 px-6 text-gray-600 hover:bg-gray-50">Home</a>
+            <a href="#features" class="block py-3 px-6 text-gray-600 hover:bg-gray-50">Features</a>
+            <a href="#pricing" class="block py-3 px-6 text-gray-600 hover:bg-gray-50">Pricing</a>
+            <a href="#testimonials" class="block py-3 px-6 text-gray-600 hover:bg-gray-50">About</a>
+            <div class="p-4">
+                 <a href="#" class="block w-full text-center bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="bg-gray-50">
+            <div class="container mx-auto px-6 py-20 md:py-32 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+                    Automate Your Emails with <span class="text-blue-600">MailPilot </span>
+                </h1>
+                <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                    Start for free with 50 emails a day, or unlock powerful features and send up to 500 mails per week on our premium plan.
+                </p>
+                <div class="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="#pricing" class="w-full sm:w-auto bg-blue-600 text-white font-semibold px-8 py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        Get Started Free
+                    </a>
+                    <a href="login.html" class="w-full sm:w-auto bg-white text-gray-800 font-semibold px-8 py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 border border-gray-200">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">Everything You Need, Nothing You Don't</h2>
+                    <p class="text-gray-600 mt-4 text-lg">Powerful features to streamline your email workflow.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 text-blue-600 mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Generous Free Plan</h3>
+                        <p class="text-gray-600">Get started instantly with 50 free automated emails every single day. No credit card required.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-green-100 text-green-600 mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Gmail Connect in 1 Click</h3>
+                        <p class="text-gray-600">Seamlessly integrate your Gmail account to send emails from a trusted source, improving deliverability.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-purple-100 text-purple-600 mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Affordable Scaling</h3>
+                        <p class="text-gray-600">Upgrade to our premium plan for just ₹9 a week and boost your capacity to 500 emails.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="bg-gray-50 py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">Find the Perfect Plan</h2>
+                    <p class="text-gray-600 mt-4 text-lg">Simple, transparent pricing for businesses of all sizes.</p>
+                </div>
+                <div class="flex flex-col lg:flex-row justify-center items-center lg:items-stretch gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-gray-200">
+                        <h3 class="text-2xl font-semibold text-center">Free Plan</h3>
+                        <p class="text-center text-gray-500 mt-2">Perfect for getting started</p>
+                        <p class="text-center text-5xl font-bold mt-6">₹0<span class="text-xl font-medium text-gray-500">/day</span></p>
+                        <ul class="mt-8 space-y-4">
+                            <li class="flex items-center"><svg class="h-6 w-6 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>50 Mails / Day</li>
+                            <li class="flex items-center"><svg class="h-6 w-6 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Basic Analytics</li>
+                            <li class="flex items-center"><svg class="h-6 w-6 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Community Support</li>
+                        </ul>
+                        <a href="login.html" class="block w-full text-center mt-8 bg-gray-800 text-white font-semibold py-3 rounded-lg hover:bg-gray-900 transition-all duration-300">Choose Plan</a>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border-2 border-blue-600 relative">
+                        <span class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-sm font-semibold px-4 py-1 rounded-full">MOST POPULAR</span>
+                        <h3 class="text-2xl font-semibold text-center text-blue-600">Premium Plan</h3>
+                        <p class="text-center text-gray-500 mt-2">For growing businesses</p>
+                        <p class="text-center text-5xl font-bold mt-6">₹9<span class="text-xl font-medium text-gray-500">/week</span></p>
+                        <ul class="mt-8 space-y-4">
+                            <li class="flex items-center"><svg class="h-6 w-6 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>500 Mails / Week</li>
+                            <li class="flex items-center"><svg class="h-6 w-6 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Advanced Analytics</li>
+                            <li class="flex items-center"><svg class="h-6 w-6 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Priority Email Support</li>
+                            <li class="flex items-center"><svg class="h-6 w-6 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>All Integrations</li>
+                        </ul>
+                        <a href="login.html" class="block w-full text-center mt-8 bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-all duration-300">Choose Plan</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">What Our Users Say</h2>
+                    <p class="text-gray-600 mt-4 text-lg">Real feedback from developers and marketers who love MailPilot.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-50 p-8 rounded-xl border border-gray-200">
+                        <p class="text-gray-600 italic">"MailPilot is a game-changer. We've automated all our transactional emails, saving us at least 10 hours a week. The setup was unbelievably simple."</p>
+                        <div class="flex items-center mt-6">
+                            <img src="https://i.pravatar.cc/150?img=1" alt="User Avatar" class="w-14 h-14 rounded-full">
+                            <div class="ml-4">
+                                <p class="font-semibold">Sarah L.</p>
+                                <p class="text-sm text-gray-500">Founder of TechCorp</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-xl border border-gray-200">
+                        <p class="text-gray-600 italic">"I was skeptical about the ₹9 price point, but the value is insane. It's reliable, fast, and the analytics are surprisingly detailed. Highly recommended!"</p>
+                        <div class="flex items-center mt-6">
+                            <img src="https://i.pravatar.cc/150?img=2" alt="User Avatar" class="w-14 h-14 rounded-full">
+                            <div class="ml-4">
+                                <p class="font-semibold">Michael B.</p>
+                                <p class="text-sm text-gray-500">Marketing Lead at Creative LLC</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-xl border border-gray-200">
+                        <p class="text-gray-600 italic">"As a developer, I love tools that just work. The API is clean, the documentation is clear, and the service is rock-solid. The free tier is also very generous."</p>
+                        <div class="flex items-center mt-6">
+                            <img src="https://i.pravatar.cc/150?img=3" alt="User Avatar" class="w-14 h-14 rounded-full">
+                            <div class="ml-4">
+                                <p class="font-semibold">Priya S.</p>
+                                <p class="text-sm text-gray-500">Full-Stack Developer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">MailPilot ✈️</h3>
+                    <p class="text-gray-400">The simplest way to automate your email workflow.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="hover:text-blue-400 transition-colors">Features</a></li>
+                        <li><a href="#pricing" class="hover:text-blue-400 transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Docs</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-blue-400 transition-colors" aria-label="Twitter">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="#" class="hover:text-blue-400 transition-colors" aria-label="GitHub">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 MailPilot.site - All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+                          </html>
+                          
