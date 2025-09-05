@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Signup - MailPilott ✈️</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .active-tab {
+            background-color: rgba(255, 255, 255, 0.4);
+            color: #1d4ed8; /* text-blue-700 */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
+
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white/30 backdrop-blur-md rounded-2xl shadow-lg overflow-hidden">
+            
+            <div class="flex">
+                <button id="login-tab-btn" class="flex-1 py-4 font-semibold text-gray-700 transition-colors duration-300 active-tab">Login</button>
+                <button id="signup-tab-btn" class="flex-1 py-4 font-semibold text-gray-700 transition-colors duration-300 hover:bg-white/20">Sign Up</button>
+            </div>
+            
+            <div class="p-8">
+                <div id="message-area" class="mb-4"></div>
+
+                <form id="login-form">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Welcome Back!</h2>
+                    <div class="mb-4">
+                        <label for="login-email" class="block text-gray-700 text-sm font-semibold mb-2">Email Address</label>
+                        <input type="email" id="login-email" name="email" placeholder="you@example.com" class="w-full px-4 py-2 bg-white/50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="login-password" class="block text-gray-700 text-sm font-semibold mb-2">Password</label>
+                        <input type="password" id="login-password" name="password" placeholder="••••••••" class="w-full px-4 py-2 bg-white/50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" required>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-md">Login</button>
+                </form>
+
+                <form id="signup-form" class="hidden">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Create an Account</h2>
+                     <div class="mb-4">
+                        <label for="signup-name" class="block text-gray-700 text-sm font-semibold mb-2">Full Name</label>
+                        <input type="text" id="signup-name" name="name" placeholder="Lakhan" class="w-full px-4 py-2 bg-white/50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="signup-email" class="block text-gray-700 text-sm font-semibold mb-2">Email Address</label>
+                        <input type="email" id="signup-email" name="email" placeholder="you@example.com" class="w-full px-4 py-2 bg-white/50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="signup-password" class="block text-gray-700 text-sm font-semibold mb-2">Password</label>
+                        <input type="password" id="signup-password" name="password" placeholder="••••••••" class="w-full px-4 py-2 bg-white/50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" required>
+                    </div>
+                     <div class="mb-6">
+                        <label for="signup-confirm-password" class="block text-gray-700 text-sm font-semibold mb-2">Confirm Password</label>
+                        <input type="password" id="signup-confirm-password" name="confirmPassword" placeholder="••••••••" class="w-full px-4 py-2 bg-white/50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" required>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-md">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Element Selectors ---
+            const loginTabBtn = document.getElementById('login-tab-btn');
+            const signupTabBtn = document.getElementById('signup-tab-btn');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const messageArea = document.getElementById('message-area');
+
+            // Using your Termux local URL
+            const API_BASE_URL = 'http://127.0.0.1:5000/api';
+
+            // --- Tab Switching Logic ---
+            loginTabBtn.addEventListener('click', () => {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                loginTabBtn.classList.add('active-tab');
+                signupTabBtn.classList.remove('active-tab');
+                clearMessages();
+            });
+
+            signupTabBtn.addEventListener('click', () => {
+                signupForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+                signupTabBtn.classList.add('active-tab');
+                loginTabBtn.classList.remove('active-tab');
+                clearMessages();
+            });
+            
+            // --- Helper Functions ---
+            const showMessage = (message, isError = false) => {
+                const messageColor = isError ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700';
+                messageArea.innerHTML = `<div class="${messageColor} p-3 rounded-lg text-sm">${message}</div>`;
+            };
+
+            const clearMessages = () => {
+                messageArea.innerHTML = '';
+            };
+
+            const toggleButtonState = (form, isLoading) => {
+                const button = form.querySelector('button[type="submit"]');
+                if (isLoading) {
+                    button.disabled = true;
+                    button.innerHTML = `<span class="animate-spin mr-2">⏳</span>Processing...`;
+                } else {
+                    button.disabled = false;
+                    button.innerHTML = form.id === 'login-form' ? 'Login' : 'Sign Up';
+                }
+            };
+
+            // --- Login Form Submission ---
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearMessages();
+
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+
+                if (!email || !password) {
+                    showMessage('All fields are required.', true);
+                    return;
+                }
+                
+                toggleButtonState(loginForm, true);
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+                    
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Login failed.');
+                    }
+
+                    // ===============================================
+                    //  THE FIX IS HERE: Save the token and username
+                    // ===============================================
+                    localStorage.setItem('authToken_mailpilot', data.token);
+                    localStorage.setItem('username_mailpilot', data.username);
+                    // ===============================================
+
+                    showMessage('Login successful! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = 'account.html';
+                    }, 1500);
+
+                } catch (error) {
+                    showMessage(error.message, true);
+                } finally {
+                    toggleButtonState(loginForm, false);
+                }
+            });
+
+            // --- Signup Form Submission (No changes needed here) ---
+            signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearMessages();
+
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+                if (!name || !email || !password || !confirmPassword) {
+                    showMessage('All fields are required.', true);
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    showMessage('Passwords do not match.', true);
+                    return;
+                }
+
+                toggleButtonState(signupForm, true);
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, password })
+                    });
+
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Signup failed. Please try again.');
+                    }
+                    
+                    showMessage(data.message || 'Signup successful! Please log in.');
+                    signupForm.reset();
+                    setTimeout(() => loginTabBtn.click(), 2000);
+
+                } catch (error) {
+                    showMessage(error.message, true);
+                } finally {
+                    toggleButtonState(signupForm, false);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
