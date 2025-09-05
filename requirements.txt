@@ -1,0 +1,9 @@
+Flask
+Flask-Cors
+gunicorn
+psycopg2-binary
+werkzeug
+google-api-python-client
+google-auth-oauthlib
+pandas
+openpyxl
