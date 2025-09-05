@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MailPilott</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; opacity: 0; transition: opacity 0.3s ease-in; }
+        .tab-active { border-color: #3b82f6; color: #2563eb; }
+    </style>
+</head>
+<body class="bg-slate-100">
+    <div class="flex h-screen bg-gray-100">
+        <aside class="w-64 bg-gray-800 text-white flex-shrink-0 flex flex-col fixed inset-y-0 left-0 z-30 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out">
+            <div class="flex items-center justify-center h-20 border-b border-gray-700">
+                <h1 class="text-2xl font-bold text-white">MailPilot ✈️</h1>
+            </div>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium rounded-lg bg-gray-900">Dashboard</a>
+            </nav>
+            <div class="p-4 mt-auto border-t border-gray-700">
+                <button id="logout-btn" class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium rounded-lg hover:bg-red-600 hover:text-white transition-colors">Logout</button>
+            </div>
+        </aside>
+
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <header class="flex justify-between items-center p-4 bg-white border-b">
+                <div class="text-gray-600">Today: <span id="current-date"></span></div>
+            </header>
+            
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-100 p-6 md:p-8">
+                <div class="max-w-7xl mx-auto">
+                    <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                        Welcome, <span id="username-display">...</span>!
+                    </h1>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                        <div class="p-6 rounded-2xl shadow-lg bg-white"><h3 class="text-sm font-medium text-gray-500 uppercase">Emails Sent Today</h3><p id="emails-sent-stat" class="text-4xl font-bold mt-2 text-blue-600">0</p></div>
+                        <div class="p-6 rounded-2xl shadow-lg bg-white"><h3 class="text-sm font-medium text-gray-500 uppercase">Remaining Quota</h3><p id="quota-stat" class="text-4xl font-bold mt-2 text-purple-600">0</p></div>
+                        <div class="p-6 rounded-2xl shadow-lg bg-white"><h3 class="text-sm font-medium text-gray-500 uppercase">Your Plan</h3><p id="plan-name" class="text-4xl font-bold mt-2 text-teal-500 capitalize">Free</p></div>
+                    </div>
+
+                    <div id="main-dashboard" class="mt-8">
+                        <div id="gmail-connect-section" class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                            <h2 class="text-2xl font-bold text-gray-800">Step 1: Connect Your Gmail Account</h2>
+                            <p class="mt-2 text-gray-500">To start sending and automating emails, securely connect your Gmail account.</p>
+                            <button id="connect-gmail-btn" class="mt-6 inline-flex items-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">Connect with Google</button>
+                        </div>
+
+                        <div id="email-automation-section" class="hidden">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                <div class="lg:col-span-2 bg-white p-8 rounded-2xl shadow-lg">
+                                   <h2 class="text-2xl font-bold text-gray-800">Create Campaign</h2>
+                                    <form id="campaign-form" class="mt-6 space-y-4">
+                                        <div>
+                                            <label class="font-semibold text-gray-600">To (Recipients):</label>
+                                            <select class="w-full mt-1 px-4 py-2 border rounded-lg">
+                                                <option>All Contacts</option>
+                                                </select>
+                                        </div>
+                                        <div>
+                                            <label class="font-semibold text-gray-600">Select Template (Optional):</label>
+                                            <select class="w-full mt-1 px-4 py-2 border rounded-lg">
+                                                <option>Start with a blank email</option>
+                                                </select>
+                                        </div>
+                                        <div>
+                                            <label class="font-semibold text-gray-600">Subject:</label>
+                                            <input type="text" placeholder="Your awesome subject line" class="w-full mt-1 px-4 py-2 border rounded-lg" required>
+                                        </div>
+                                        <div>
+                                            <label class="font-semibold text-gray-600">Message:</label>
+                                            <p class="text-xs text-gray-500">Tip: Use <code class="bg-gray-200 p-1 rounded">{{name}}</code> to personalize your email.</p>
+                                            <textarea rows="8" placeholder="Hi {{name}},&#10;&#10;Just wanted to reach out..." class="w-full mt-1 px-4 py-2 border rounded-lg" required></textarea>
+                                        </div>
+                                        <div class="flex items-center justify-between pt-4">
+                                            <button type="button" class="px-6 py-3 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300">Schedule Later</button>
+                                            <button type="submit" class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">Send Campaign</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="lg:col-span-1 space-y-8">
+                                    <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                        <h3 class="text-xl font-bold text-gray-800 mb-4">Contacts</h3>
+                                        <div class="border-b mb-4">
+                                            <button class="tab-active font-semibold py-2 px-4 border-b-2">Add Contact</button>
+                                            <button class="font-semibold py-2 px-4 text-gray-500">Import</button>
+                                        </div>
+                                        <form class="space-y-3">
+                                            <input type="text" placeholder="Name" class="w-full px-4 py-2 border rounded-lg">
+                                            <input type="email" placeholder="Email Address" class="w-full px-4 py-2 border rounded-lg">
+                                            <button class="w-full py-2 bg-gray-800 text-white font-semibold rounded-lg">Add Contact</button>
+                                        </form>
+                                    </div>
+                                     <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                        <h3 class="text-xl font-bold text-gray-800 mb-4">Templates</h3>
+                                        <ul class="space-y-2">
+                                            <li class="p-2 bg-slate-50 rounded-lg">Welcome Email</li>
+                                            <li class="p-2 bg-slate-50 rounded-lg">Monthly Newsletter</li>
+                                        </ul>
+                                        <button class="w-full mt-4 py-2 border-2 border-dashed rounded-lg hover:bg-gray-50">Create New Template</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script>
+        // Pichhle version ka JavaScript bilkul waisa hi rahega.
+        // Humne bas HTML/CSS layout update kiya hai.
+        document.addEventListener('DOMContentLoaded', () => {
+            const authToken = localStorage.getItem('authToken_mailpilot');
+            const API_BASE_URL = 'http://127.0.0.1:5000';
+
+            const gmailConnectSection = document.getElementById('gmail-connect-section');
+            const emailAutomationSection = document.getElementById('email-automation-section');
+            const connectGmailBtn = document.getElementById('connect-gmail-btn');
+            const usernameDisplay = document.getElementById('username-display');
+            const emailsSentStat = document.getElementById('emails-sent-stat');
+            const quotaStat = document.getElementById('quota-stat');
+            const planName = document.getElementById('plan-name');
+            const logoutBtn = document.getElementById('logout-btn');
+
+            const handleLogout = () => { localStorage.clear(); window.location.href = 'login.html'; };
+
+            const fetchAndDisplayDashboard = async () => {
+                if (!authToken) { handleLogout(); return; }
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/dashboard-data`, {
+                        headers: { 'Authorization': `Bearer ${authToken}` }
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message);
+
+                    usernameDisplay.textContent = data.username;
+                    emailsSentStat.textContent = data.emailsSent;
+                    quotaStat.textContent = data.remainingQuota;
+                    planName.textContent = data.plan;
+
+                    if (data.isGmailConnected) {
+                        gmailConnectSection.classList.add('hidden');
+                        emailAutomationSection.classList.remove('hidden');
+                    } else {
+                        gmailConnectSection.classList.remove('hidden');
+                        emailAutomationSection.classList.add('hidden');
+                    }
+                    document.body.style.opacity = '1';
+                } catch (error) { handleLogout(); }
+            };
+
+            connectGmailBtn.addEventListener('click', async () => {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/authorize-gmail`, {
+                        headers: { 'Authorization': `Bearer ${authToken}` }
+                    });
+                    const data = await response.json();
+                    if (data.authorization_url) {
+                        prompt("Is URL ko copy karke Chrome mein kholiye:", data.authorization_url);
+                    }
+                } catch (error) { alert("Could not start Gmail authorization."); }
+            });
+
+            logoutBtn.addEventListener('click', handleLogout);
+            fetchAndDisplayDashboard();
+        });
+    </script>
+</body>
+</html>
