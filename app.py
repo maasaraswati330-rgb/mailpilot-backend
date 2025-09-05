@@ -22,19 +22,39 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 # --- App Configuration ---
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-app.secret_key = 'devlakhan-codes-secret-key-for-session'
+# FLASK_SECRET_KEY ko environment variable se lena sabse best hai
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'default-super-secret-key-for-local-dev')
 logging.basicConfig(level=logging.INFO)
 
-# --- Database & App Config ---
-NEON_DATABASE_URL = "postgresql://neondb_owner:npg_WRh9NJu5FAEM@ep-delicate-wind-a1gcnjnn-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
-CLIENT_SECRETS_FILE = 'client_secret.json'
+# --- Reading Secrets from Environment Variables ---
+NEON_DATABASE_URL = os.environ.get('NEON_DATABASE_URL')
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'https://mailpilott.netlify.app') # Aapka Netlify URL
 SCOPES = ['https://www.googleapis.com/auth/gmail.send']
 PRO_ACTIVATION_CODE = "DEVLAKHAN_PRO_2025"
 
+
+# Google OAuth config, ab file ki zaroorat nahi
+google_oauth_config = {
+    "web": {
+        "client_id": GOOGLE_CLIENT_ID,
+        "client_secret": GOOGLE_CLIENT_SECRET,
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "redirect_uris": [], # Isko hum dynamically set karenge
+    }
+}
+
 def get_db_connection():
     """Establishes a connection to the Neon.tech PostgreSQL database."""
-    conn = psycopg2.connect(NEON_DATABASE_URL)
-    return conn
+    try:
+        conn = psycopg2.connect(NEON_DATABASE_URL)
+        return conn
+    except psycopg2.OperationalError as e:
+        logging.error(f"Database connection error: {e}")
+        return None
 
 def get_user_from_token(return_full_user=False):
     """Helper function to get user from Bearer token"""
@@ -43,6 +63,7 @@ def get_user_from_token(return_full_user=False):
     
     token = auth_header.split(' ')[1]
     conn = get_db_connection()
+    if not conn: return None
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute('SELECT * FROM users WHERE token = %s', (token,))
     user = cursor.fetchone()
@@ -121,23 +142,6 @@ def get_dashboard_data():
         "templates": templates
     }), 200
 
-@app.route('/api/contacts', methods=['POST'])
-def add_contact():
-    user = get_user_from_token(return_full_user=True)
-    if not user:
-        return jsonify({"success": False, "message": "Invalid token"}), 401
-
-    data = request.get_json()
-    name, email = data.get('name'), data.get('email')
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO contacts (user_id, name, email) VALUES (%s, %s, %s)",
-                   (user['id'], name, email))
-    conn.commit()
-    conn.close()
-    return jsonify({"success": True, "message": "Contact added successfully!"}), 201
-
 # --- Google OAuth Routes ---
 
 @app.route('/authorize-gmail')
@@ -146,8 +150,8 @@ def authorize_gmail():
     if not user:
         return jsonify({"success": False, "message": "User not authenticated"}), 401
     
-    flow = Flow.from_client_secrets_file(
-        CLIENT_SECRETS_FILE,
+    flow = Flow.from_client_config(
+        client_config=google_oauth_config,
         scopes=SCOPES,
         redirect_uri=url_for('oauth2callback', _external=True)
     )
@@ -160,12 +164,13 @@ def authorize_gmail():
 @app.route('/oauth2callback')
 def oauth2callback():
     user_id = request.args.get('state')
-    flow = Flow.from_client_secrets_file(
-        CLIENT_SECRETS_FILE, scopes=SCOPES,
+    flow = Flow.from_client_config(
+        client_config=google_oauth_config, scopes=SCOPES,
         redirect_uri=url_for('oauth2callback', _external=True)
     )
     flow.fetch_token(authorization_response=request.url)
     credentials = flow.credentials
+
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
@@ -174,7 +179,7 @@ def oauth2callback():
     )
     conn.commit()
     conn.close()
-    return redirect('http://127.0.0.1:8000/account.html?gmail=connected')
+    return redirect(f"{FRONTEND_URL}/account.html?gmail=connected")
 
 @app.route('/api/send-email', methods=['POST'])
 def send_email():
@@ -189,8 +194,8 @@ def send_email():
         token=user['gmail_access_token'],
         refresh_token=user['gmail_refresh_token'],
         token_uri='https://oauth2.googleapis.com/token',
-        client_id='268812981839-vihqplvabu5rafu9rfcdp2aurrt2dtah.apps.googleusercontent.com',
-        client_secret='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'
+        client_id=GOOGLE_CLIENT_ID,
+        client_secret=GOOGLE_CLIENT_SECRET
     )
 
     try:
@@ -215,4 +220,6 @@ def send_email():
         return jsonify({"success": False, "message": "Failed to send email."}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
+    
