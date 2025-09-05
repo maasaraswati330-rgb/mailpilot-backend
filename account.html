@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - MailPilott</title>
+    <title>Dashboard - MailPilot ✈️</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +37,6 @@
                     <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                         Welcome, <span id="username-display">...</span>!
                     </h1>
-
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                         <div class="p-6 rounded-2xl shadow-lg bg-white"><h3 class="text-sm font-medium text-gray-500 uppercase">Emails Sent Today</h3><p id="emails-sent-stat" class="text-4xl font-bold mt-2 text-blue-600">0</p></div>
                         <div class="p-6 rounded-2xl shadow-lg bg-white"><h3 class="text-sm font-medium text-gray-500 uppercase">Remaining Quota</h3><p id="quota-stat" class="text-4xl font-bold mt-2 text-purple-600">0</p></div>
@@ -52,61 +51,7 @@
                         </div>
 
                         <div id="email-automation-section" class="hidden">
-                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                                <div class="lg:col-span-2 bg-white p-8 rounded-2xl shadow-lg">
-                                   <h2 class="text-2xl font-bold text-gray-800">Create Campaign</h2>
-                                    <form id="campaign-form" class="mt-6 space-y-4">
-                                        <div>
-                                            <label class="font-semibold text-gray-600">To (Recipients):</label>
-                                            <select class="w-full mt-1 px-4 py-2 border rounded-lg">
-                                                <option>All Contacts</option>
-                                                </select>
-                                        </div>
-                                        <div>
-                                            <label class="font-semibold text-gray-600">Select Template (Optional):</label>
-                                            <select class="w-full mt-1 px-4 py-2 border rounded-lg">
-                                                <option>Start with a blank email</option>
-                                                </select>
-                                        </div>
-                                        <div>
-                                            <label class="font-semibold text-gray-600">Subject:</label>
-                                            <input type="text" placeholder="Your awesome subject line" class="w-full mt-1 px-4 py-2 border rounded-lg" required>
-                                        </div>
-                                        <div>
-                                            <label class="font-semibold text-gray-600">Message:</label>
-                                            <p class="text-xs text-gray-500">Tip: Use <code class="bg-gray-200 p-1 rounded">{{name}}</code> to personalize your email.</p>
-                                            <textarea rows="8" placeholder="Hi {{name}},&#10;&#10;Just wanted to reach out..." class="w-full mt-1 px-4 py-2 border rounded-lg" required></textarea>
-                                        </div>
-                                        <div class="flex items-center justify-between pt-4">
-                                            <button type="button" class="px-6 py-3 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300">Schedule Later</button>
-                                            <button type="submit" class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">Send Campaign</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="lg:col-span-1 space-y-8">
-                                    <div class="bg-white p-6 rounded-2xl shadow-lg">
-                                        <h3 class="text-xl font-bold text-gray-800 mb-4">Contacts</h3>
-                                        <div class="border-b mb-4">
-                                            <button class="tab-active font-semibold py-2 px-4 border-b-2">Add Contact</button>
-                                            <button class="font-semibold py-2 px-4 text-gray-500">Import</button>
-                                        </div>
-                                        <form class="space-y-3">
-                                            <input type="text" placeholder="Name" class="w-full px-4 py-2 border rounded-lg">
-                                            <input type="email" placeholder="Email Address" class="w-full px-4 py-2 border rounded-lg">
-                                            <button class="w-full py-2 bg-gray-800 text-white font-semibold rounded-lg">Add Contact</button>
-                                        </form>
-                                    </div>
-                                     <div class="bg-white p-6 rounded-2xl shadow-lg">
-                                        <h3 class="text-xl font-bold text-gray-800 mb-4">Templates</h3>
-                                        <ul class="space-y-2">
-                                            <li class="p-2 bg-slate-50 rounded-lg">Welcome Email</li>
-                                            <li class="p-2 bg-slate-50 rounded-lg">Monthly Newsletter</li>
-                                        </ul>
-                                        <button class="w-full mt-4 py-2 border-2 border-dashed rounded-lg hover:bg-gray-50">Create New Template</button>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </main>
@@ -114,19 +59,15 @@
     </div>
     
     <script>
-        // Pichhle version ka JavaScript bilkul waisa hi rahega.
-        // Humne bas HTML/CSS layout update kiya hai.
         document.addEventListener('DOMContentLoaded', () => {
             const authToken = localStorage.getItem('authToken_mailpilot');
-            const API_BASE_URL = 'https://mailpilot-backend-8s81.onrender.com';
+            const API_BASE_URL = 'https://mailpilot-backend-8s81.onrender.com'; // Live backend URL
 
+            // DOM Selectors...
             const gmailConnectSection = document.getElementById('gmail-connect-section');
             const emailAutomationSection = document.getElementById('email-automation-section');
             const connectGmailBtn = document.getElementById('connect-gmail-btn');
             const usernameDisplay = document.getElementById('username-display');
-            const emailsSentStat = document.getElementById('emails-sent-stat');
-            const quotaStat = document.getElementById('quota-stat');
-            const planName = document.getElementById('plan-name');
             const logoutBtn = document.getElementById('logout-btn');
 
             const handleLogout = () => { localStorage.clear(); window.location.href = 'login.html'; };
@@ -141,9 +82,7 @@
                     if (!response.ok) throw new Error(data.message);
 
                     usernameDisplay.textContent = data.username;
-                    emailsSentStat.textContent = data.emailsSent;
-                    quotaStat.textContent = data.remainingQuota;
-                    planName.textContent = data.plan;
+                    // ... update other stats ...
 
                     if (data.isGmailConnected) {
                         gmailConnectSection.classList.add('hidden');
@@ -163,10 +102,25 @@
                     });
                     const data = await response.json();
                     if (data.authorization_url) {
-                        prompt("Is URL ko copy karke Chrome mein kholiye:", data.authorization_url);
+                        // ===============================================
+                        // ## YAHAN PAR CHANGE KIYA GAYA HAI ##
+                        // Ab yeh direct redirect karega, prompt nahi dikhayega
+                        // ===============================================
+                        window.location.href = data.authorization_url;
                     }
-                } catch (error) { alert("Could not start Gmail authorization."); }
+                } catch (error) { 
+                    alert("Could not start Gmail authorization. Please check the backend server."); 
+                }
             });
+            
+            // Check for gmail=connected parameter in URL after redirect
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('gmail') === 'connected') {
+                // Optional: Show a success message
+                alert('Gmail connected successfully!');
+                // Clean the URL
+                window.history.replaceState({}, document.title, "/account.html");
+            }
 
             logoutBtn.addEventListener('click', handleLogout);
             fetchAndDisplayDashboard();
@@ -174,4 +128,3 @@
     </script>
 </body>
 </html>
-
